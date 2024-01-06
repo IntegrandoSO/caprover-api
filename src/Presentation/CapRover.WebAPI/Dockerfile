@@ -5,17 +5,15 @@ WORKDIR /app
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Presentation/CapRover.WebAPI/CapRover.WebAPI.csproj", "src/Presentation/CapRover.WebAPI/"]
 RUN dotnet restore "./src/Presentation/CapRover.WebAPI/./CapRover.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/src/Presentation/CapRover.WebAPI"
-RUN dotnet build "./CapRover.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./CapRover.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./CapRover.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./CapRover.WebAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
