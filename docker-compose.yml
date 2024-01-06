@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  caprover.webapi:
+    image: ${DOCKER_REGISTRY-}caproverwebapi
+    build:
+      context: .
+      dockerfile: src/Presentation/CapRover.WebAPI/Dockerfile
